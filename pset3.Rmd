@@ -3,7 +3,7 @@ title: 'Math for Data Science: Problem Set 3'
 author: "Sofia Breganni, David Moth, Adarsh Tripathi"
 date: "2025-24-11"
 output:
-  html_document:
+  pdf_document:
     df_print: paged
 header-includes:
   - \usepackage{amsmath}
@@ -45,11 +45,10 @@ vc_lev <- cov(b_centered_lev)
 dim(vc_lev)
 ```
 
-    ```{=latex}
-    \begin{answerbox}
-    The dimensionality of this covariance is m x m, since the covariance matrix pairs the covariance of each column against the     other, and since there are 200 columns (and 150 rows), then we end up with a 200 x 200 matrix.
-    \end{answerbox}
-    ```
+```{=latex}
+\begin{answerbox} The dimensionality of this covariance is m x m, since the covariance matrix pairs the covariance of each column against the     other, and since there are 200 columns (and 150 rows), then we end up with a 200 x 200 matrix. 
+\end{answerbox}
+```
 
 b.  Find the total variance of the centered blue matrix for this image. Compare this to the total variance of the centered blue matrix for Laszlo.
 
@@ -69,10 +68,11 @@ vc_laszlo <- cov(b_centered_laszlo)
 total_variance_blue_laszlo <- sum(diag(vc_laszlo))
 ```
 
-    ```{=latex}
-    \begin{answerbox}
-    The total variance of the blue matrix for the picture of Lev is `r total_variance_blue_lev`, while for the picture of Laszlo     it is `r total_variance_blue_laszlo`.
-    ```
+```{=latex}
+\begin{answerbox} 
+The total variance of the blue matrix for the picture of Lev is `r total_variance_blue_lev`, while for the picture of Laszlo it is `r total_variance_blue_laszlo`. 
+\end{answerbox}
+```
 
 c.  Use the `eigen` command to get the eigendecomposition of the blue variance-covariance matrix for Lev. Multiply the centered blue data matrix by the eigenvector corresponding to the largest eigenvalue to get the first principal component. Compute its variance.
 
@@ -127,12 +127,11 @@ p2 <- fviz_eig(b_pca_laszlo, barfill = "blue", ncp = 5, addlabels = TRUE) +
 )
 ```
 
-
-    ```{=latex}
-    \begin{answerbox}
-    The proportion of the total variance captured by the first principal component of the blue matrix is for lev `r  prop_explained_by_first_PC_lev`, while for laszlo it is `r prop_explained_by_first_PC_laszlo`.
-    ```
-
+```{=latex}
+\begin{answerbox} 
+The proportion of the total variance captured by the first principal component of the blue matrix is for lev `r  prop_explained_by_first_PC_lev`, while for laszlo it is `r prop_explained_by_first_PC_laszlo`. 
+\end{answerbox}
+```
 
 e.  Now compute Lev's second principal component. Compute the covariance of the first principal component with the second.[^2] Is this what you expected? Comment briefly.
 
@@ -147,10 +146,11 @@ first_second_covariance_lev <- cov(as.vector(PC1_lev), as.vector(PC2_lev))
 first_second_covariance_lev <- round(first_second_covariance_lev, 10)
 ```
 
-    ```{=latex}
-    \begin{answerbox}
-    The covariance of the two first principal components is 0. This makes sense, as principal components by design are orthogonal, so that the maximum amount of unique and "different" variance can be captured, as otherwise the data that is captured can be explained by the former principal component.
-    ```
+```{=latex}
+\begin{answerbox} 
+The covariance of the two first principal components is 0. This makes sense, as principal components by design are orthogonal, so that the maximum amount of unique and "different" variance can be captured, as otherwise the data that is captured can be explained by the former principal component.
+\end{answerbox}
+```
 
 f.  Now let's run PCA on Lev's `r`, `g`, and `b` matrices using the `prcomp` function with the options `center=FALSE` and `scale.=FALSE`.[^3] Combine these objects into a list. Now, looping over a handful of numbers of principal components, reconstitute images of Lev as we did in your lab. How many principal components does it take to start to recognize Lev as a cat?
 
@@ -182,23 +182,22 @@ for(i in vec){
   mtext(paste(i, "PCs"), side=3, line=0.5, cex=1.2)
 }
 ```
-    ```{=latex}
-    \begin{answerbox}
-    As can be seen above, it takes around 10 principal components to have a reasonable degree of confidence that we are indeed looking at a cat.
-    ```
+
+`{{=latex}}  \begin{answerbox}  As can be seen above, it takes around 10 principal components to have a reasonable degree of confidence that we are indeed looking at a cat. \end{answerbox}`
 
 g.  Using what you learned from parts (b), (d), and (f) above, explain why Lev requires more principal components to be minimally represented than Laszlo, despite being equally beautiful.
 
-    ```{=latex}
+```{=latex}
     \begin{answerbox}
     While indeed equally beautiful, Lev requires more principal components because the variance is more equally spread out across the different principal components (though, of course, the first is still much higher than the remaining). Relatively, choosing just a few principal components in the case of Lev yields only a smaller proportion of the total pixel variance. While Laszlo has higher total variance in the case of the blue matrix, it is more relatively more concentrated in the first principal component. As such, Laszlo requires fewer principal components to capture his beauty.
     \end{answerbox}
-    ```
+```
 
-
-\begin{answerbox}
-Lev requires more principal components to be minimally represented than Laszlo because Lev's image has more complex variation in color and texture across the pixels, as seen in the higher total variance of the blue matrix and in the distribution of variance across the principal components. Each additional principal component captures some of this extra variation, so more PCs are needed to start recognizing Lev as a cat.
-\end{answerbox}
+```{=latex}
+    \begin{answerbox}
+    Lev requires more principal components to be minimally represented than Laszlo because Lev's image has more complex variation in color and texture across the pixels, as seen in the higher total variance of the blue matrix and in the distribution of variance across the principal components. Each additional principal component captures some of this extra variation, so more PCs are needed to start recognizing Lev as a cat.
+    \end{answerbox}
+```
 
 ## 2. Penalized Regression
 
@@ -231,7 +230,7 @@ a.  Write down the Lagrangian for this constrained minimization problem. Please 
     \end{itemize}
 
     \[
-        \mathcal{L}(\boldsymbol{\beta}, \lambda) = (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda (\boldsymbol{\beta^T\beta}-s)
+        \mathcal{L}(\boldsymbol{\beta}, \lambda) = (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda (\boldsymbol{\beta}^T\boldsymbol{\beta}-s)
     \]
 \end{answerbox}
 ```
@@ -240,39 +239,55 @@ b.  Take the first derivative of the Lagrangian with respect to $\beta$ and set 
 
 ```{=latex}
 \begin{answerbox}
-Solving the derivative step-by-step:
+    Solving the derivative step-by-step:
     \begin{itemize}
-        \item Derivative of $(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{y}^T \mathbf{y} - 2\mathbf{y}^TX\boldsymbol{\beta} + \boldsymbol{\beta}^T X^T X \boldsymbol{\beta}$
+        \item Derivative of $(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{y}^T \mathbf{y} - 2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\beta}^T \mathbf{X}^T X \boldsymbol{\beta}$
         \[
-        \frac{d}{d\beta}(\mathbf{y}^T \mathbf{y} - 2\mathbf{y}^TX\boldsymbol{\beta} + \boldsymbol{\beta}^T X^T X \boldsymbol{\beta}) = - 2X^T\mathbf{y} + 2 X^T X \boldsymbol{\beta} 
+        \frac{d}{d\beta}(\mathbf{y}^T \mathbf{y} - 2\mathbf{y}^T\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\beta}^T \mathbf{X}^T \mathbf{X} \boldsymbol{\beta}) = - 2\mathbf{X}^T\mathbf{y} + 2 \mathbf{X}^T X \boldsymbol{\beta} 
         \]
-        \item Derivative of $\lambda (\boldsymbol{\beta^T\beta}-s)$
+        \item Derivative of $\lambda (\boldsymbol{\beta}^T\boldsymbol{\beta}-s)$
         \[
-        \frac{d}{d\beta}\lambda (\boldsymbol{\beta^T\beta}-s) = \lambda 2 \boldsymbol{\beta}
+        \frac{d}{d\beta}\lambda (\boldsymbol{\beta}^T\boldsymbol{\beta}-s) = \lambda 2 \boldsymbol{\beta}
         \]
         \item Therefore:
         \[
         \frac{d\mathcal{L}(\boldsymbol{\beta}, \lambda)}{d\beta} = - 2X^T\mathbf{y} + 2 X^T X \boldsymbol{\beta} + \lambda 2 \boldsymbol{\beta}
         \]
     \end{itemize}
-    
-    
-Setting the derivative = 0 and solving for $\hat{\beta}$:
+
+    Setting the derivative = 0 and solving for $\hat{\beta}$:
+
     \begin{align*}
         - 2X^T\mathbf{y} + 2 X^T X \boldsymbol{\beta} + \lambda 2 \boldsymbol{\beta} 
         &= \mathbf{0}\\
         2 X^T X \boldsymbol{\beta} + \lambda 2 \boldsymbol{\beta} 
         &= 2X^T\mathbf{y}\\
-        (X^T X + \lambda I) \boldsymbol{\beta}
+        (X^T X + \lambda \mathbf{I}) \boldsymbol{\beta}
         &= X^T\mathbf{y}\\
         \hat{\boldsymbol{\beta}}
-        &= (X^T X + \lambda I)^{-1}(X^T\mathbf{y})
+        &= (X^T X + \lambda \mathbf{I})^{-1}(X^T\mathbf{y})
     \end{align*}
-    
 \end{answerbox}
 ```
 
 c.  Compare your answer to the standard linear regression estimator. Under what condition are they the same?
+
+```{=latex}
+\begin{answerbox}
+    From the lectures we know that:
+    \[
+        \hat{\boldsymbol{\beta}}_{\text{OLS}} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}
+    \]
+
+    From (b) we know that:
+    \[
+        \hat{\boldsymbol{\beta}}_{\text{ridge}} = (\mathbf{X}^T \mathbf{X} + \lambda \mathbf{I})^{-1}(\mathbf{X}^T\mathbf{y})
+    \]
+
+    The ridge estimator modifies the OLS estimator by adding a the penalty term $\lambda \mathbf{I}$ on the size of the coefficients. 
+    When $\lambda = 0$, the penalty disappears and the ridge estimator reduces exactly to the OLS estimator. Therefore, we can say that OLS is a special case of ridge regression with no penalization.
+\end{answerbox}
+```
 
 d.  Using the same `BostonHousing` dataset and the same set of variables from the lab, compute the ridge regression $\hat{\beta}$ with the equation you found in part (b) above. First standardize your $\mathbf{X}$ matrix using the `scale()` function in `R`. Use the `glmnet()` function in the `glmnet` package to check your answer.[^6]
 
