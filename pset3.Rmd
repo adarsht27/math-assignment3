@@ -328,9 +328,37 @@ coef(fit)
 
 e.  For the sequence of lambdas below, make a plot with `lambda_seq` on the $x$-axis (increasing from 0 to 100) and the estimated $\beta$ coefficients for per capita crime rate in the town (in blue), proximity to the Charles River (in red), and nitric oxides concentration (in green) on the $y$-axis. Use `geom_line` to plot the coefficients and add a black horizontal line at $y=0$. Label your axes and include a legend.
 
+variables:
+
+-   `crim`: per capita crime rate in the town (BLUE)
+-   `chas`: Charles River dummy variable (1 if tract is on the water, 0 if not) (RED)
+-   `nox`: nitric oxides concentration (parts per 10 million) (GREEN)
+
 ```{r, echo = FALSE, include = TRUE}
 lambda_seq <- c(10^seq(2, -1, by = -.1), 0)
 
+beta_plot <- sapply(lambda_seq, function(l){solve(t(X) %*% X + l*I) %*% (t(X) %*% y)})
+beta_df <- as.data.frame(t(beta_plot))
+colnames(beta_df) <- c("", "crim", "chas", "nox", "dis", "ptratio", "rad")
+beta_df$lambda <- lambda_seq
+
+beta_long <- beta_df[, c("crim", "chas", "nox", "lambda")] |>
+  tidyr::pivot_longer(
+    cols = -lambda,
+    names_to = "variable",
+    values_to = "coefficient"
+  )
+
+ggplot(beta_long, aes(x = lambda, y = coefficient, color = variable)) +
+  geom_line() +
+  scale_color_manual(values = c(crim = "blue",
+                                chas = "red",
+                                nox = "green")) +
+  labs(x = "Lambda",
+       y = "Ridge Coefficient Estimate",
+       color = "Variable",
+       title = "Ridge Coefficients vs Lambda") +
+  theme_minimal()
 ```
 
 f.  Discussion:
