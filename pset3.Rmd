@@ -46,7 +46,8 @@ dim(vc_lev)
 ```
 
 ```{=latex}
-\begin{answerbox} The dimensionality of this covariance is m x m, since the covariance matrix pairs the covariance of each column against the     other, and since there are 200 columns (and 150 rows), then we end up with a 200 x 200 matrix. 
+\begin{answerbox} 
+The dimensionality of this covariance is m x m, since the covariance matrix pairs the covariance of each column against the     other, and since there are 200 columns (and 150 rows), then we end up with a 200 x 200 matrix. 
 \end{answerbox}
 ```
 
@@ -319,7 +320,7 @@ X <- cbind(1, X_stan)
 y <- BostonHousing$medv
 
 # Finding Beta
-lambda <- 1 #idk
+lambda <- 1 
 I <- diag(ncol(X))
 
 beta <- solve(t(X) %*% X + lambda*I) %*% (t(X) %*% y)
@@ -353,6 +354,8 @@ beta_long <- beta_df[, c("crim", "chas", "nox", "lambda")] |>
     names_to = "variable",
     values_to = "coefficient"
   )
+
+library(ggplot2)
 
 ggplot(beta_long, aes(x = lambda, y = coefficient, color = variable)) +
   geom_line() +
