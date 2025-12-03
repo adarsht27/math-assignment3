@@ -326,7 +326,7 @@ I <- diag(ncol(X))
 beta <- solve(t(X) %*% X + lambda*I) %*% (t(X) %*% y)
 beta
 
-fit <- glmnet(X, y, alpha = 0, lambda = lambda)
+fit <- glmnet(X, y, alpha = 0, lambda = lambda/nrow(X))
 coef(fit)
 
 # They are very similar but I really don't understand if I did this step correctly - maybe you can ask jackson on monday?
