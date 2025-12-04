@@ -203,8 +203,7 @@ for(i in vec){
 }
 ```
 
-
-```{=latex} 
+```{=latex}
 \begin{answerbox}  
 As can be seen above, it takes around 10 principal components to have a reasonable degree of confidence that we are indeed looking at a cat. 
 \end{answerbox}
@@ -403,7 +402,7 @@ This shrinking behaviour connects back to the constrained optimization problem: 
 A small value of $s$ means the feasible region for $\beta$ is tight; when $s$ is small, the optimizer is not allowed to choose a large coefficient vector even if doing so would achieve a smaller residual sum of squares. In the Lagrangian form, this corresponds to a large value of $\lambda$. Thus, \emph{large $\lambda$ (equivalently, small $s$) imposes a strong restriction on the overall size of the coefficient vector}, which forces the solution to move closer to zero.
 
 
-STILL NEED TO ADD INTUITION FOR THE LAST PART <3
+Ridge shrinkage estimator can be suitable when the predictors are supected to be highly correlated so it may bring multicollinearity OLS assumption violation in the model estimation. This is more visible as dimensions are increased. Ridge estimator introduces a small bias(through penalising term) to reduce variance compared to OLS. This helps coefficient to shrink but never to zero because it is assumed that all estimators contribute to the model.
 
 \end{answerbox}
 ```
