@@ -352,7 +352,7 @@ variables:
 -   `chas`: Charles River dummy variable (1 if tract is on the water, 0 if not) (RED)
 -   `nox`: nitric oxides concentration (parts per 10 million) (GREEN)
 
-```{r, echo = FALSE, include = TRUE}
+```{r, echo = TRUE, include = TRUE}
 lambda_seq <- c(10^seq(2, -1, by = -.1), 0)
 
 beta_plot <- sapply(lambda_seq, function(l){solve(t(X) %*% X + l*I) %*% (t(X) %*% y)})
